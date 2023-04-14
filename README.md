@@ -9,3 +9,4 @@ This is a fork of <https://github.com/MDeiml/tree-sitter-markdown>
 
 All contributions are welcome. For details refer to [CONTRIBUTING.md].
 
+[CONTRIBUTING.md]: https://github.com/jmbuhr/tree-sitter-quarto/blob/split_parser/CONTRIBUTING.md
