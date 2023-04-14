@@ -1,20 +1,20 @@
 [package]
 name = "tree-sitter-md"
-description = "markdown grammar for the tree-sitter parsing library"
+description = "quarto grammar for the tree-sitter parsing library"
 version = "0.1.5"
-keywords = ["incremental", "parsing", "markdown"]
+keywords = ["incremental", "parsing", "quarto"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/MDeiml/tree-sitter-markdown"
+repository = "https://github.com/MDeiml/tree-sitter-quarto"
 edition = "2018"
 license = "MIT"
 
 build = "bindings/rust/build.rs"
 include = [
   "bindings/rust/*",
-  "tree-sitter-markdown/src/*",
-  "tree-sitter-markdown-inline/src/*",
-  "tree-sitter-markdown/queries/*",
-  "tree-sitter-markdown-inline/queries/*",
+  "tree-sitter-quarto/src/*",
+  "tree-sitter-quarto-inline/src/*",
+  "tree-sitter-quarto/queries/*",
+  "tree-sitter-quarto-inline/queries/*",
   "benchmark/main.rs",
 ]
 

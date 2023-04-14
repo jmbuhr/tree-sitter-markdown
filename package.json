@@ -1,17 +1,17 @@
 {
-  "name": "tree-sitter-markdown",
+  "name": "tree-sitter-quarto",
   "version": "0.1.5",
-  "description": "Markdown grammar for tree-sitter",
+  "description": "quarto grammar for tree-sitter",
   "main": "bindings/node",
   "keywords": [
     "parser",
-    "markdown"
+    "quarto"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/MDeiml/tree-sitter-markdown.git"
+    "url": "https://github.com/jmbuhr/tree-sitter-quarto.git"
   },
-  "author": "MDeiml (https://github.com/MDeiml)",
+  "author": "jmbuhr (https://github.com/jmbuhr)",
   "license": "MIT",
   "dependencies": {
     "nan": "^2.17.0"
@@ -20,13 +20,13 @@
     "tree-sitter-cli": "^0.20.0"
   },
   "scripts": {
-    "test": "(cd tree-sitter-markdown && tree-sitter test) && (cd tree-sitter-markdown-inline && tree-sitter test)",
-    "build": "(cd tree-sitter-markdown && tree-sitter generate --no-bindings) && (cd tree-sitter-markdown-inline && tree-sitter generate --no-bindings) && node-gyp build"
+    "test": "(cd tree-sitter-quarto && tree-sitter test) && (cd tree-sitter-quarto-inline && tree-sitter test)",
+    "build": "(cd tree-sitter-quarto && tree-sitter generate --no-bindings) && (cd tree-sitter-quarto-inline && tree-sitter generate --no-bindings) && node-gyp build"
   },
   "tree-sitter": [
     {
       "scope": "source.md",
-      "injection-regex": "markdown|md",
+      "injection-regex": "quarto|md",
       "file-types": [
         "md"
       ]

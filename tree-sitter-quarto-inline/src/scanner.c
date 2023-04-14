@@ -19,7 +19,7 @@ typedef enum {
     UNCLOSED_SPAN
 } TokenType;
 
-// Determines if a character is punctuation as defined by the markdown spec.
+// Determines if a character is punctuation as defined by the quarto spec.
 static bool is_punctuation(char c) {
     return
         (c >= '!' && c <= '/') ||
@@ -28,7 +28,7 @@ static bool is_punctuation(char c) {
         (c >= '{' && c <= '~');
 }
 
-// Determines if a character is ascii whitespace as defined by the markdown spec.
+// Determines if a character is ascii whitespace as defined by the quarto spec.
 static bool is_whitespace(char c) {
     return c == ' ' || c == '\t' || c == '\n' || c == '\r';
 }
@@ -346,13 +346,13 @@ static bool scan(Scanner *s, TSLexer *lexer, const bool *valid_symbols) {
     return false;
 }
 
-void *tree_sitter_markdown_inline_external_scanner_create() {
+void *tree_sitter_quarto_inline_external_scanner_create() {
     Scanner *s = (Scanner *)malloc(sizeof(Scanner));
     deserialize(s, NULL, 0);
     return s;
 }
 
-bool tree_sitter_markdown_inline_external_scanner_scan(
+bool tree_sitter_quarto_inline_external_scanner_scan(
     void *payload,
     TSLexer *lexer,
     const bool *valid_symbols
@@ -361,7 +361,7 @@ bool tree_sitter_markdown_inline_external_scanner_scan(
     return scan(scanner, lexer, valid_symbols);
 }
 
-unsigned tree_sitter_markdown_inline_external_scanner_serialize(
+unsigned tree_sitter_quarto_inline_external_scanner_serialize(
     void *payload,
     char* buffer
 ) {
@@ -369,7 +369,7 @@ unsigned tree_sitter_markdown_inline_external_scanner_serialize(
     return serialize(scanner, buffer);
 }
 
-void tree_sitter_markdown_inline_external_scanner_deserialize(
+void tree_sitter_quarto_inline_external_scanner_deserialize(
     void *payload,
     char* buffer,
     unsigned length
@@ -378,7 +378,7 @@ void tree_sitter_markdown_inline_external_scanner_deserialize(
     deserialize(scanner, buffer, length);
 }
 
-void tree_sitter_markdown_inline_external_scanner_destroy(void *payload) {
+void tree_sitter_quarto_inline_external_scanner_destroy(void *payload) {
     Scanner *scanner = (Scanner *)payload;
     free(scanner);
 }

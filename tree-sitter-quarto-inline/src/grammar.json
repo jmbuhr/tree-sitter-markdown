@@ -1,5 +1,5 @@
 {
-  "name": "markdown_inline",
+  "name": "quarto_inline",
   "rules": {
     "inline": {
       "type": "SEQ",
