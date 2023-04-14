@@ -8,12 +8,8 @@ suggestion for a new feature or quarto extension, you can always open an
 
 If you open an issue please give a short description of your bug or feature
 along with a code example. If there is a relevant spec like the [CommonMark
-Spec][commonmark] or the [GitHub Flavored quarto Spec][gfm] please link it in
+Spec][commonmark] or the [GitHub Flavored markdown Spec][gfm] please link it in
 the issue.
-
-Any feature suggestions are welcome. The grammar should by default only support
-very common syntax, but any extension can be implemented behind a compile time
-flag. (See below)
 
 Some bug reports belong in other repositories if they only concern the
 implementation of the grammar in a specific context like `nvim-treesitter`, but
@@ -62,8 +58,8 @@ Before submitting any code please check the following:
 * You deleted any auto-generated bindings and files for debugging purposes
   like `log.html`
 
-[issue]: https://github.com/MDeiml/tree-sitter-quarto/issues/new
-[pull request]: https://github.com/MDeiml/tree-sitter-quarto/compare
+[issue]: https://github.com/jmbuhr/tree-sitter-quarto/issues/new
+[pull request]: https://github.com/jmbuhr/tree-sitter-quarto/compare
 [gfm]: https://github.github.com/gfm/
 [commonmark]: https://spec.commonmark.org/
 [tree-sitter spec]: https://tree-sitter.github.io/tree-sitter/
