@@ -1,7 +1,7 @@
 use tree_sitter_md::*;
 
 fn main() {
-    let mut parser = MarkdownParser::default();
+    let mut parser = quartoParser::default();
     let filename = std::env::args().nth(1).unwrap();
     let source = std::fs::read(filename).unwrap();
     let mut tree = parser.parse(&source, None).unwrap();
@@ -16,6 +16,6 @@ fn main() {
     reparse(&mut parser, &source[1..], tree);
 }
 
-fn reparse(parser: &mut MarkdownParser, source: &[u8], old_tree: MarkdownTree) {
+fn reparse(parser: &mut quartoParser, source: &[u8], old_tree: quartoTree) {
     parser.parse(source, Some(&old_tree));
 }

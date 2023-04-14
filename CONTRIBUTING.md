@@ -1,14 +1,14 @@
 # Contributing
 
 All contributions are welcome. Specifically, if you found a bug or have a
-suggestion for a new feature or markdown extension, you can always open an
+suggestion for a new feature or quarto extension, you can always open an
 [issue] or [pull request].
 
 ## Issues
 
 If you open an issue please give a short description of your bug or feature
 along with a code example. If there is a relevant spec like the [CommonMark
-Spec][commonmark] or the [GitHub Flavored Markdown Spec][gfm] please link it in
+Spec][commonmark] or the [GitHub Flavored quarto Spec][gfm] please link it in
 the issue.
 
 Any feature suggestions are welcome. The grammar should by default only support
@@ -25,8 +25,8 @@ Please refer to the [tree-sitter spec] for more details on how to write a tree-
 sitter grammar.
 
 This parse is split into two grammars. One for block structure, which can be
-found in the `tree-sitter-markdown` folder, and one for inline structure, which
-can be found in the `tree-sitter-markdown-inline` folder. Components that are
+found in the `tree-sitter-quarto` folder, and one for inline structure, which
+can be found in the `tree-sitter-quarto-inline` folder. Components that are
 parts of either grammar can be found in the `common` folder.
 
 For either of the grammar the most important files are the `grammar.js` which
@@ -52,8 +52,8 @@ I will happily accept any pull requests.
 
 Before submitting any code please check the following:
 
-* You ran `tree-sitter generate --no-bindings` in the `tree-sitter-markdown` or
-  `tree-sitter-markdown-inline` directories respecively after modifying any
+* You ran `tree-sitter generate --no-bindings` in the `tree-sitter-quarto` or
+  `tree-sitter-quarto-inline` directories respecively after modifying any
   `grammar.js` file.
 * When running `tree-sitter test` only the cases defined in `failing.txt` or
   `extension_<>.txt` for not activated extensions fail for **both** gramars.
@@ -62,8 +62,8 @@ Before submitting any code please check the following:
 * You deleted any auto-generated bindings and files for debugging purposes
   like `log.html`
 
-[issue]: https://github.com/MDeiml/tree-sitter-markdown/issues/new
-[pull request]: https://github.com/MDeiml/tree-sitter-markdown/compare
+[issue]: https://github.com/MDeiml/tree-sitter-quarto/issues/new
+[pull request]: https://github.com/MDeiml/tree-sitter-quarto/compare
 [gfm]: https://github.github.com/gfm/
 [commonmark]: https://spec.commonmark.org/
 [tree-sitter spec]: https://tree-sitter.github.io/tree-sitter/

@@ -1,10 +1,10 @@
-//! This crate provides markdown language support for the [tree-sitter][] parsing library.
+//! This crate provides quarto language support for the [tree-sitter][] parsing library.
 //!
-//! It contains two grammars: [`language`] to parse the block structure of markdown documents and
+//! It contains two grammars: [`language`] to parse the block structure of quarto documents and
 //! [`inline_language`] to parse inline content.
 //!
-//! It also supplies [`MarkdownParser`] as a convenience wrapper around the two grammars.
-//! [`MarkdownParser::parse`] returns a [`MarkdownTree`] instread of a [`Tree`][Tree]. This struct
+//! It also supplies [`quartoParser`] as a convenience wrapper around the two grammars.
+//! [`quartoParser::parse`] returns a [`quartoTree`] instread of a [`Tree`][Tree]. This struct
 //! contains a block tree and an inline tree for each node in the block tree that has inline
 //! content
 //!
@@ -17,64 +17,64 @@ use std::collections::HashMap;
 use tree_sitter::{InputEdit, Language, Node, Parser, Point, Range, Tree, TreeCursor};
 
 extern "C" {
-    fn tree_sitter_markdown() -> Language;
-    fn tree_sitter_markdown_inline() -> Language;
+    fn tree_sitter_quarto() -> Language;
+    fn tree_sitter_quarto_inline() -> Language;
 }
 
 /// Get the tree-sitter [Language][] for the block grammar.
 ///
 /// [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
 pub fn language() -> Language {
-    unsafe { tree_sitter_markdown() }
+    unsafe { tree_sitter_quarto() }
 }
 
 /// Get the tree-sitter [Language][] for the inline grammar.
 ///
 /// [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
 pub fn inline_language() -> Language {
-    unsafe { tree_sitter_markdown_inline() }
+    unsafe { tree_sitter_quarto_inline() }
 }
 
 pub const HIGHLIGHT_QUERY_BLOCK: &str =
-    include_str!("../../tree-sitter-markdown/queries/highlights.scm");
+    include_str!("../../tree-sitter-quarto/queries/highlights.scm");
 pub const INJECTION_QUERY_BLOCK: &str =
-    include_str!("../../tree-sitter-markdown/queries/injections.scm");
+    include_str!("../../tree-sitter-quarto/queries/injections.scm");
 pub const HIGHLIGHT_QUERY_INLINE: &str =
-    include_str!("../../tree-sitter-markdown-inline/queries/highlights.scm");
+    include_str!("../../tree-sitter-quarto-inline/queries/highlights.scm");
 pub const INJECTION_QUERY_INLINE: &str =
-    include_str!("../../tree-sitter-markdown-inline/queries/injections.scm");
+    include_str!("../../tree-sitter-quarto-inline/queries/injections.scm");
 
 /// The content of the [`node-types.json`][] file for the block grammar.
 ///
 /// [`node-types.json`]: https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types
-pub const NODE_TYPES_BLOCK: &str = include_str!("../../tree-sitter-markdown/src/node-types.json");
+pub const NODE_TYPES_BLOCK: &str = include_str!("../../tree-sitter-quarto/src/node-types.json");
 
 /// The content of the [`node-types.json`][] file for the inline grammar.
 ///
 /// [`node-types.json`]: https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types
 pub const NODE_TYPES_INLINE: &str =
-    include_str!("../../tree-sitter-markdown-inline/src/node-types.json");
+    include_str!("../../tree-sitter-quarto-inline/src/node-types.json");
 
-/// A parser that produces [`MarkdownTree`]s.
+/// A parser that produces [`quartoTree`]s.
 ///
 /// This is a convenience wrapper around [`language`] and [`inline_language`].
-pub struct MarkdownParser {
+pub struct quartoParser {
     parser: Parser,
     block_language: Language,
     inline_language: Language,
 }
 
-/// A stateful object for walking a [`MarkdownTree`] efficiently.
+/// A stateful object for walking a [`quartoTree`] efficiently.
 ///
 /// This exposes the same methdos as [`TreeCursor`], but abstracts away the
-/// double block / inline structure of [`MarkdownTree`].
-pub struct MarkdownCursor<'a> {
-    markdown_tree: &'a MarkdownTree,
+/// double block / inline structure of [`quartoTree`].
+pub struct quartoCursor<'a> {
+    quarto_tree: &'a quartoTree,
     block_cursor: TreeCursor<'a>,
     inline_cursor: Option<TreeCursor<'a>>,
 }
 
-impl<'a> MarkdownCursor<'a> {
+impl<'a> quartoCursor<'a> {
     /// Get the cursor's current [`Node`].
     pub fn node(&self) -> Node<'a> {
         match &self.inline_cursor {
@@ -119,7 +119,7 @@ impl<'a> MarkdownCursor<'a> {
         let node = self.block_cursor.node();
         match node.kind() {
             "inline" | "pipe_table_cell" => {
-                if let Some(inline_tree) = self.markdown_tree.inline_tree(&node) {
+                if let Some(inline_tree) = self.quarto_tree.inline_tree(&node) {
                     self.inline_cursor = Some(inline_tree.walk());
                     return true;
                 }
@@ -232,13 +232,13 @@ impl<'a> MarkdownCursor<'a> {
 }
 
 #[derive(Debug, Clone)]
-pub struct MarkdownTree {
+pub struct quartoTree {
     block_tree: Tree,
     inline_trees: Vec<Tree>,
     inline_indices: HashMap<usize, usize>,
 }
 
-impl MarkdownTree {
+impl quartoTree {
     /// Edit the block tree and inline trees to keep them in sync with source code that has been
     /// edited.
     ///
@@ -270,22 +270,22 @@ impl MarkdownTree {
         &self.inline_trees
     }
 
-    /// Create a new [`MarkdownCursor`] starting from the root of the tree.
-    pub fn walk(&self) -> MarkdownCursor {
-        MarkdownCursor {
-            markdown_tree: &self,
+    /// Create a new [`quartoCursor`] starting from the root of the tree.
+    pub fn walk(&self) -> quartoCursor {
+        quartoCursor {
+            quarto_tree: &self,
             block_cursor: self.block_tree.walk(),
             inline_cursor: None,
         }
     }
 }
 
-impl Default for MarkdownParser {
+impl Default for quartoParser {
     fn default() -> Self {
         let block_language = language();
         let inline_language = inline_language();
         let parser = Parser::new();
-        MarkdownParser {
+        quartoParser {
             parser,
             block_language,
             inline_language,
@@ -293,7 +293,7 @@ impl Default for MarkdownParser {
     }
 }
 
-impl MarkdownParser {
+impl quartoParser {
     /// Parse a slice of UTF8 text.
     ///
     /// # Arguments:
@@ -301,17 +301,17 @@ impl MarkdownParser {
     /// * `old_tree` A previous syntax tree parsed from the same document.
     ///   If the text of the document has changed since `old_tree` was
     ///   created, then you must edit `old_tree` to match the new text using
-    ///   [MarkdownTree::edit].
+    ///   [quartoTree::edit].
     ///
-    /// Returns a [MarkdownTree] if parsing succeeded, or `None` if:
+    /// Returns a [quartoTree] if parsing succeeded, or `None` if:
     ///  * The timeout set with [tree_sitter::Parser::set_timeout_micros] expired
     ///  * The cancellation flag set with [tree_sitter::Parser::set_cancellation_flag] was flipped
     pub fn parse_with<T: AsRef<[u8]>, F: FnMut(usize, Point) -> T>(
         &mut self,
         callback: &mut F,
-        old_tree: Option<&MarkdownTree>,
-    ) -> Option<MarkdownTree> {
-        let MarkdownParser {
+        old_tree: Option<&quartoTree>,
+    ) -> Option<quartoTree> {
+        let quartoParser {
             parser,
             block_language,
             inline_language,
@@ -383,7 +383,7 @@ impl MarkdownParser {
         drop(tree_cursor);
         inline_trees.shrink_to_fit();
         inline_indices.shrink_to_fit();
-        Some(MarkdownTree {
+        Some(quartoTree {
             block_tree,
             inline_trees,
             inline_indices,
@@ -397,12 +397,12 @@ impl MarkdownParser {
     /// * `old_tree` A previous syntax tree parsed from the same document.
     ///   If the text of the document has changed since `old_tree` was
     ///   created, then you must edit `old_tree` to match the new text using
-    ///   [MarkdownTree::edit].
+    ///   [quartoTree::edit].
     ///
-    /// Returns a [MarkdownTree] if parsing succeeded, or `None` if:
+    /// Returns a [quartoTree] if parsing succeeded, or `None` if:
     ///  * The timeout set with [tree_sitter::Parser::set_timeout_micros] expired
     ///  * The cancellation flag set with [tree_sitter::Parser::set_cancellation_flag] was flipped
-    pub fn parse(&mut self, text: &[u8], old_tree: Option<&MarkdownTree>) -> Option<MarkdownTree> {
+    pub fn parse(&mut self, text: &[u8], old_tree: Option<&quartoTree>) -> Option<quartoTree> {
         self.parse_with(&mut |byte, _| &text[byte..], old_tree)
     }
 }
@@ -418,17 +418,17 @@ mod tests {
         let mut parser = tree_sitter::Parser::new();
         parser
             .set_language(language())
-            .expect("Error loading markdown language");
+            .expect("Error loading quarto language");
         let mut inline_parser = tree_sitter::Parser::new();
         inline_parser
             .set_language(inline_language())
-            .expect("Error loading markdown language");
+            .expect("Error loading quarto language");
     }
 
     #[test]
     fn inline_ranges() {
         let code = "# title\n\nInline [content].\n";
-        let mut parser = MarkdownParser::default();
+        let mut parser = quartoParser::default();
         let mut tree = parser.parse(code.as_bytes(), None).unwrap();
 
         let section = tree.block_tree().root_node().child(0).unwrap();
@@ -480,9 +480,9 @@ mod tests {
     }
 
     #[test]
-    fn markdown_cursor() {
+    fn quarto_cursor() {
         let code = "# title\n\nInline [content].\n";
-        let mut parser = MarkdownParser::default();
+        let mut parser = quartoParser::default();
         let tree = parser.parse(code.as_bytes(), None).unwrap();
         let mut cursor = tree.walk();
         assert_eq!(cursor.node().kind(), "document");
@@ -506,7 +506,7 @@ mod tests {
     #[test]
     fn table() {
         let code = "| foo |\n| --- |\n| *bar*|\n";
-        let mut parser = MarkdownParser::default();
+        let mut parser = quartoParser::default();
         let tree = parser.parse(code.as_bytes(), None).unwrap();
         dbg!(&tree.inline_trees);
         let mut cursor = tree.walk();

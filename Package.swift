@@ -3,15 +3,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "TreeSitterMarkdown",
+    name: "TreeSitterquarto",
     platforms: [.macOS(.v10_13), .iOS(.v11)],
     products: [
-        .library(name: "TreeSitterMarkdown", targets: ["TreeSitterMarkdown", "TreeSitterMarkdownInline"]),
+        .library(name: "TreeSitterquarto", targets: ["TreeSitterquarto", "TreeSitterquartoInline"]),
     ],
     dependencies: [],
     targets: [
-        .target(name: "TreeSitterMarkdown",
-                path: "tree-sitter-markdown",
+        .target(name: "TreeSitterquarto",
+                path: "tree-sitter-quarto",
                 exclude: [
                     "corpus",
                     "grammar.js",
@@ -25,8 +25,8 @@ let package = Package(
                 ],
                 publicHeadersPath: "bindings/swift",
                 cSettings: [.headerSearchPath("src")]),
-        .target(name: "TreeSitterMarkdownInline",
-                path: "tree-sitter-markdown-inline",
+        .target(name: "TreeSitterquartoInline",
+                path: "tree-sitter-quarto-inline",
                 exclude: [
                     "corpus",
                     "grammar.js",

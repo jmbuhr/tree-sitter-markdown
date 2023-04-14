@@ -2076,7 +2076,7 @@ Example 122 - https://github.github.com/gfm/#example-122
 ================================================================================
 <DIV CLASS="foo">
 
-*Markdown*
+*quarto*
 
 </DIV>
 

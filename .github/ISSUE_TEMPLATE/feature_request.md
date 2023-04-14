@@ -8,4 +8,4 @@ assignees: ''
 ---
 
 <!-- consider linking a relevant section from a spec -->
-<!-- extensions from any spec (rmarkdown, pandoc, ...) are welcome -->
+<!-- extensions from any spec (rquarto, pandoc, ...) are welcome -->

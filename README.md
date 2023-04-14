@@ -1,18 +1,18 @@
-# tree-sitter-markdown
-A markdown parser for [tree-sitter].
+# tree-sitter-quarto
+A quarto parser for [tree-sitter].
 
-![](https://github.com/MDeiml/tree-sitter-markdown/blob/split_parser/contrib/screenshot.png)
+![](https://github.com/MDeiml/tree-sitter-quarto/blob/split_parser/contrib/screenshot.png)
 
-The parser is designed to read markdown according to the [CommonMark Spec],
+The parser is designed to read quarto according to the [CommonMark Spec],
 but some extensions to the spec from different sources such as [Github flavored
-markdown] are also included. These can be toggled on or off at compile time.
+quarto] are also included. These can be toggled on or off at compile time.
 For specifics see [Extensions](#extensions)
 
 ## Goals
 
 Even though this parser has existed for some while and obvious issues are
 mostly solved, there are still lots of inaccuarcies in the output. These stem
-from restricting a complex format such as markdown to the quite restricting
+from restricting a complex format such as quarto to the quite restricting
 tree-sitter parsing rules.
 
 As such it is not recommended to use this parser where correctness is
@@ -31,7 +31,7 @@ of them are on by default, these can be disabled with the environment variable
 
 | Name | Environment variable | Specification | Default | Also enables |
 |:----:|:--------------------:|:-------------:|:-------:|:------------:|
-| Github flavored markdown | `EXTENSION_GFM` | [link](https://github.github.com/gfm/) | ✓ | Task lists, strikethrough, pipe tables |
+| Github flavored quarto | `EXTENSION_GFM` | [link](https://github.github.com/gfm/) | ✓ | Task lists, strikethrough, pipe tables |
 | Task lists | `EXTENSION_TASK_LIST` | [link](https://github.github.com/gfm/#task-list-items-extension-) | ✓ |  |
 | Strikethrough | `EXTENSION_STRIKETHROUGH` | [link](https://github.github.com/gfm/#strikethrough-extension-) | ✓ |  |
 | Pipe tables | `EXTENSION_PIPE_TABLE` | [link](https://github.github.com/gfm/#tables-extension-) | ✓ |  |
@@ -56,8 +56,8 @@ be excluded from these ranges. For an example implementation see `lib.rs` in
 the `bindings` folder.
 
 [CommonMark Spec]: https://spec.commonmark.org/
-[Github flavored markdown]: https://github.github.com/gfm/
+[Github flavored quarto]: https://github.github.com/gfm/
 [tree-sitter]: https://tree-sitter.github.io/tree-sitter/
 [neovim]: https://neovim.io/
 [helix]: https://helix-editor.com/
-[CONTRIBUTING.md]: https://github.com/MDeiml/tree-sitter-markdown/blob/split_parser/CONTRIBUTING.md
+[CONTRIBUTING.md]: https://github.com/MDeiml/tree-sitter-quarto/blob/split_parser/CONTRIBUTING.md

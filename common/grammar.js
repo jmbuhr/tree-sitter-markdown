@@ -107,7 +107,7 @@ exports.rules = {
     _newline_token: $ => /\n|\r\n?/,
 };
 
-// Returns a rule that matches all characters that count as punctuation inside markdown, besides
+// Returns a rule that matches all characters that count as punctuation inside quarto, besides
 // a list of excluded punctuation characters. Calling this function with a empty list as the second
 // argument returns a rule that matches all punctuation.
 function punctuation_without($, chars) {
