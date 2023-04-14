@@ -85,7 +85,7 @@ typedef enum {
     ANONYMOUS,
 } Block;
 
-// Determines if a character is punctuation as defined by the markdown spec.
+// Determines if a character is punctuation as defined by the quarto spec.
 static bool is_punctuation(char c) {
     return
         (c >= '!' && c <= '/') ||
@@ -1449,7 +1449,7 @@ static bool scan(Scanner *s, TSLexer *lexer, const bool *valid_symbols) {
     return false;
 }
 
-void *tree_sitter_markdown_external_scanner_create() {
+void *tree_sitter_quarto_external_scanner_create() {
     Scanner *s = (Scanner *)malloc(sizeof(Scanner));
 
     assert(ATX_H6_MARKER == ATX_H1_MARKER + 5);
@@ -1458,7 +1458,7 @@ void *tree_sitter_markdown_external_scanner_create() {
     return s;
 }
 
-bool tree_sitter_markdown_external_scanner_scan(
+bool tree_sitter_quarto_external_scanner_scan(
     void *payload,
     TSLexer *lexer,
     const bool *valid_symbols
@@ -1468,7 +1468,7 @@ bool tree_sitter_markdown_external_scanner_scan(
     return scan(scanner, lexer, valid_symbols);
 }
 
-unsigned tree_sitter_markdown_external_scanner_serialize(
+unsigned tree_sitter_quarto_external_scanner_serialize(
     void *payload,
     char* buffer
 ) {
@@ -1476,7 +1476,7 @@ unsigned tree_sitter_markdown_external_scanner_serialize(
     return serialize(scanner, buffer);
 }
 
-void tree_sitter_markdown_external_scanner_deserialize(
+void tree_sitter_quarto_external_scanner_deserialize(
     void *payload,
     char* buffer,
     unsigned length
@@ -1485,7 +1485,7 @@ void tree_sitter_markdown_external_scanner_deserialize(
     deserialize(scanner, buffer, length);
 }
 
-void tree_sitter_markdown_external_scanner_destroy(void *payload) {
+void tree_sitter_quarto_external_scanner_destroy(void *payload) {
     Scanner *scanner = (Scanner *)payload;
     free(scanner);
 }

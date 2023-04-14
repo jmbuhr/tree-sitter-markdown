@@ -1,5 +1,5 @@
 {
-  "name": "markdown",
+  "name": "quarto",
   "rules": {
     "document": {
       "type": "SEQ",
